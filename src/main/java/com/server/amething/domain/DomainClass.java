@@ -1,4 +1,4 @@
-package com.server.amething.amething.domain;
+package com.server.amething.domain;
 
 public class DomainClass {
 }

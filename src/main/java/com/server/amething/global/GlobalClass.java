@@ -1,2 +1,4 @@
-package com.server.amething.global;public class GlobalClass {
+package com.server.amething.global;
+
+public class GlobalClass {
 }
