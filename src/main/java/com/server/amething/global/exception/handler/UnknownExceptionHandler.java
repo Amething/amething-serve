@@ -1,7 +1,7 @@
-package com.server.Dotori.global.exception.handler;
+package com.server.amething.global.exception.handler;
 
-import com.server.Dotori.global.exception.ErrorCode;
-import com.server.Dotori.global.exception.ErrorResponse;
+import com.server.amething.global.exception.ErrorCode;
+import com.server.amething.global.exception.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
