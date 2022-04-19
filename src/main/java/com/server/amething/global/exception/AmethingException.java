@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class DotoriException extends RuntimeException{
+public class AmethingException extends RuntimeException{
 
     private final ErrorCode errorCode;
 }
