@@ -1,7 +1,6 @@
 package com.server.amething.domain.member;
 
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
