@@ -21,5 +21,6 @@ public class Answer {
 
     @Column(name = "answer_description")
     private String description;
+
 }
 
