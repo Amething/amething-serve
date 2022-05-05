@@ -17,12 +17,12 @@ public class Question {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "receiver_member_id")
-    private Member receiverMember;
+    @JoinColumn(name = "owner_member_id")
+    private Member ownerMember;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "sender_member_id")
-    private Member senderMember;
+    @JoinColumn(name = "visitor_member_id")
+    private Member visitorMember;
 
     @Column(name = "question_description")
     private String description;
