@@ -17,8 +17,8 @@ public class Question {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "owner_member_id")
-    private Member ownerMember;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column(name = "question_description")
     private String description;
