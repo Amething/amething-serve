@@ -20,10 +20,6 @@ public class Question {
     @JoinColumn(name = "owner_member_id")
     private Member ownerMember;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "visitor_member_id")
-    private Member visitorMember;
-
     @Column(name = "question_description")
     private String description;
 
