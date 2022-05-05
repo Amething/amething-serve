@@ -21,8 +21,8 @@ public class Question {
     private Member receiverMember;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "sent_member_id")
-    private Member sentMember;
+    @JoinColumn(name = "sender_member_id")
+    private Member senderMember;
 
     @Column(name = "question_description")
     private String description;
