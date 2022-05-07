@@ -1,6 +1,6 @@
 package com.server.amething.domain.question;
 
-import com.server.amething.domain.member.Member;
+import com.server.amething.domain.user.User;
 import com.server.amething.domain.question.enum_type.QuestionType;
 import lombok.*;
 
@@ -17,8 +17,8 @@ public class Question {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "question_description")
     private String description;
