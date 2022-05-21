@@ -1,7 +1,7 @@
 package com.server.amething.domain.auth.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.server.amething.domain.auth.dto.OauthResponseDto;
+import com.server.amething.domain.auth.dto.TokenResponseDto;
 import com.server.amething.domain.auth.dto.UserProfileResponseDto;
 import com.server.amething.domain.auth.service.OauthService;
 import com.server.amething.domain.user.service.UserService;
@@ -21,7 +21,7 @@ public class OauthController {
 
     @GetMapping("/code")
     private void getAuthorizationCode(@RequestParam String code) throws JsonProcessingException {
-        OauthResponseDto token = oauthService.getAccessToken(code);
+        TokenResponseDto token = oauthService.getAccessToken(code);
         UserProfileResponseDto userProfile = oauthService.getUserProfile(token.getAccess_token());
         userService.saveUserInfo(userProfile);
     }
