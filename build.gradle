@@ -31,6 +31,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
+	// *** OAuth2 ***
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
 	// *** Querydsl ***
 	implementation 'com.querydsl:querydsl-jpa'
 
@@ -45,8 +48,10 @@ dependencies {
 	// *** Swagger UI ***
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
-}
 
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
+	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
+}
 tasks.named('test') {
 	useJUnitPlatform()
 }

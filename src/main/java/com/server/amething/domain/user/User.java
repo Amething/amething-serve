@@ -14,20 +14,10 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "user_nickname")
-    private String nickname;
-
-    @Column(name = "user_password")
-    private String password;
-
     @Column(name = "user_name")
-    private String memberName;
-
-    @Column(name = "user_bio")
-    private String bio;
+    private String userName;
 
     @Column(name = "user_profile_picture")
     private String profilePicture;
 
 }
-
