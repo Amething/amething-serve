@@ -6,5 +6,5 @@ import com.server.amething.domain.user.dto.ProFileDto;
 
 public interface UserService {
     void saveUserInfo(UserProfileResponseDto userProfileResponseDto);
-    User loadProFile(String userName);
+    ProFileDto loadProFile(String userName);
 }

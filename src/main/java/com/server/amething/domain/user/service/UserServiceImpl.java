@@ -23,8 +23,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User loadProFile(String userName) {
+    public ProFileDto loadProFile(String userName) {
         User user = userRepository.findAllByUserName(userName);
-        return user;
+        ProFileDto proFileDto = new ProFileDto(user.getUserName(),user.getProfilePicture());
+        return proFileDto;
     }
 }

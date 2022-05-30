@@ -20,8 +20,8 @@ public class UserController {
     private final ResponseService responseService;
 
     @GetMapping("/{userName}")
-    public SingleResult<User> loadProFile(@PathVariable String userName){
-        User user = userService.loadProFile(userName);
-        return responseService.getSingleResult(user);
+    public SingleResult<ProFileDto> loadProFile(@PathVariable String userName){
+        ProFileDto proFileDto = userService.loadProFile(userName);
+        return responseService.getSingleResult(proFileDto);
     }
 }
