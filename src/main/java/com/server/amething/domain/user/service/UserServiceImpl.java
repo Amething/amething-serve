@@ -2,7 +2,7 @@ package com.server.amething.domain.user.service;
 
 import com.server.amething.domain.auth.dto.UserProfileResponseDto;
 import com.server.amething.domain.user.User;
-import com.server.amething.domain.user.dto.ProFileDto;
+import com.server.amething.domain.user.dto.ProfileDto;
 import com.server.amething.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,9 +23,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public ProFileDto loadProFile(String userName) {
+    public ProfileDto loadProfile(String userName) {
         User user = userRepository.findAllByUserName(userName);
-        ProFileDto proFileDto = new ProFileDto(user.getUserName(),user.getProfilePicture());
-        return proFileDto;
+        ProfileDto profileDto = new ProfileDto(user.getUserName(),user.getProfilePicture());
+        return profileDto;
     }
 }

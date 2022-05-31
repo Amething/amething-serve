@@ -1,6 +1,6 @@
 package com.server.amething.domain.user.controller;
 
-import com.server.amething.domain.user.dto.ProFileDto;
+import com.server.amething.domain.user.dto.ProfileDto;
 import com.server.amething.domain.user.service.UserService;
 import com.server.amething.global.response.ResponseService;
 import com.server.amething.global.response.result.SingleResult;
@@ -19,8 +19,8 @@ public class UserController {
     private final ResponseService responseService;
 
     @GetMapping("/{userName}")
-    public SingleResult<ProFileDto> loadProFile(@PathVariable String userName){
-        ProFileDto proFileDto = userService.loadProFile(userName);
-        return responseService.getSingleResult(proFileDto);
+    public SingleResult<ProfileDto> loadProfile(@PathVariable String userName){
+        ProfileDto profileDto = userService.loadProfile(userName);
+        return responseService.getSingleResult(profileDto);
     }
 }

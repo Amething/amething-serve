@@ -1,7 +1,7 @@
 package com.server.amething.domain.user.controller;
 
 import com.server.amething.domain.user.User;
-import com.server.amething.domain.user.dto.ProFileDto;
+import com.server.amething.domain.user.dto.ProfileDto;
 import com.server.amething.domain.user.repository.UserRepository;
 import com.server.amething.domain.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,15 +37,15 @@ class UserControllerTest {
 
     @Test
     @DisplayName("프로필 구현을 위한 정보를 가져오는 컨트롤러")
-    void loadProFile() throws Exception {
+    void loadProfile() throws Exception {
         //given
-        ProFileDto proFileDto = new ProFileDto("user","img");
+        ProfileDto profileDto = new ProfileDto("user","img");
         userRepository.save(User.builder()
-                .userName(proFileDto.getUserName())
-                .profilePicture(proFileDto.getProfilePicture())
+                .userName(profileDto.getUserName())
+                .profilePicture(profileDto.getProfilePicture())
                 .build());
         //when
-        final ResultActions resultActions = mvc.perform(get("/user/{forumName}", proFileDto.getUserName())
+        final ResultActions resultActions = mvc.perform(get("/user/{forumName}", profileDto.getUserName())
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8"));
         //then

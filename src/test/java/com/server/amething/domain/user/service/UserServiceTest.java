@@ -1,7 +1,7 @@
 package com.server.amething.domain.user.service;
 
 import com.server.amething.domain.user.User;
-import com.server.amething.domain.user.dto.ProFileDto;
+import com.server.amething.domain.user.dto.ProfileDto;
 import com.server.amething.domain.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,18 +20,18 @@ class UserServiceTest {
 
     @Test
     @DisplayName("프로필 구현을 위한 정보를 가져오는 로직")
-    void loadProFile() {
+    void loadProfile() {
         //given
-        ProFileDto proFileDto = new ProFileDto("user","img");
+        ProfileDto profileDto = new ProfileDto("user","img");
         userRepository.save(User.builder()
-                        .userName(proFileDto.getUserName())
-                        .profilePicture(proFileDto.getProfilePicture())
+                        .userName(profileDto.getUserName())
+                        .profilePicture(profileDto.getProfilePicture())
                         .build());
         //when
-        ProFileDto user = userService.loadProFile(proFileDto.getUserName());
+        ProfileDto user = userService.loadProfile(profileDto.getUserName());
 
         //then
-        assertThat(user.getUserName()).isEqualTo(proFileDto.getUserName());
-        assertThat(user.getProfilePicture()).isEqualTo(proFileDto.getProfilePicture());
+        assertThat(user.getUserName()).isEqualTo(profileDto.getUserName());
+        assertThat(user.getProfilePicture()).isEqualTo(profileDto.getProfilePicture());
     }
 }
