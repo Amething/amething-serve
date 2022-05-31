@@ -25,6 +25,7 @@ class UserControllerTest {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private UserService userService;
 
@@ -45,7 +46,7 @@ class UserControllerTest {
                 .profilePicture(profileDto.getProfilePicture())
                 .build());
         //when
-        final ResultActions resultActions = mvc.perform(get("/user/{forumName}", profileDto.getUserName())
+        final ResultActions resultActions = mvc.perform(get("/v1/user/{forumName}", profileDto.getUserName())
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8"));
         //then
