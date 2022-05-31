@@ -24,8 +24,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public ProfileDto loadProfile(String userName) {
-        User user = userRepository.findAllByUserName(userName);
-        ProfileDto profileDto = new ProfileDto(user.getUserName(),user.getProfilePicture());
+        ProfileDto profileDto = userRepository.findProfileByUsername(userName);
         return profileDto;
     }
 }
