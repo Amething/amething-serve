@@ -1,6 +1,5 @@
 package com.server.amething.domain.user.controller;
 
-import com.server.amething.domain.user.User;
 import com.server.amething.domain.user.dto.ProFileDto;
 import com.server.amething.domain.user.service.UserService;
 import com.server.amething.global.response.ResponseService;
