@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/v1")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
     private final ResponseService responseService;
 
-    @GetMapping("/{userName}")
+    @GetMapping("/user/{userName}")
     public SingleResult<ProfileDto> loadProfile(@PathVariable String userName){
         ProfileDto profileDto = userService.loadProfile(userName);
         return responseService.getSingleResult(profileDto);
