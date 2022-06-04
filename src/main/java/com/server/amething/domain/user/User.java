@@ -26,8 +26,8 @@ public class User implements UserDetails {
     @Column(name = "user_oauth_id", unique = true)
     private Long oauthId;
 
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "user_nickname")
+    private String nickname;
 
     @Column(name = "user_profile_picture")
     private String profilePicture;
@@ -92,7 +92,7 @@ public class User implements UserDetails {
         this.profilePicture = profilePicture;
     }
 
-    public void changeUsername(String userName) {
-        this.userName = userName;
+    public void changeNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

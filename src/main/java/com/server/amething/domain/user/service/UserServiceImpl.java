@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService{
     private void saveUser(UserProfileResponseDto userProfileResponseDto, String refreshToken) {
         userRepository.save(User.builder()
                 .oauthId(userProfileResponseDto.getId())
-                .userName(userProfileResponseDto.getProperties().getNickname())
+                .nickname(userProfileResponseDto.getProperties().getNickname())
                 .profilePicture(userProfileResponseDto.getProperties().getProfile_image())
                 .roles(Collections.singletonList(Role.ROLE_MEMBER))
                 .bio("")
@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService{
      */
     private void updateUser(User user, UserProfileResponseDto userProfileResponseDto) {
         user.changeProfilePicture(userProfileResponseDto.getProperties().getProfile_image());
-        user.changeUsername(userProfileResponseDto.getProperties().getNickname());
+        user.changeNickname(userProfileResponseDto.getProperties().getNickname());
     }
 
 }

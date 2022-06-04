@@ -28,9 +28,8 @@ public class UserUtilTest {
     @DisplayName("")
     void registerUser() {
         User taemin = User.builder()
+                .nickname("김태민")
                 .oauthId(1111L)
-                .bio("")
-                .userName("김태민")
                 .roles(Collections.singletonList(Role.ROLE_MEMBER))
                 .build();
 
@@ -49,6 +48,6 @@ public class UserUtilTest {
     @Test
     void currentUserTest() {
         User currentUser = userUtil.getCurrentUser();
-        Assertions.assertThat("김태민").isEqualTo(currentUser.getUsername());
+        Assertions.assertThat("김태민").isEqualTo(currentUser.getNickname());
     }
 }
