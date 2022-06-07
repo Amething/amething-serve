@@ -42,7 +42,7 @@ class UserControllerTest {
         //given
         ProfileDto profileDto = new ProfileDto("user","img");
         userRepository.save(User.builder()
-                pn.userName(profileDto.getUserName())
+                .nickname(profileDto.getUserName())
                 .profilePicture(profileDto.getProfilePicture())
                 .build());
         //when
