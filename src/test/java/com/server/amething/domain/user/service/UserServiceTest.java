@@ -28,7 +28,7 @@ class UserServiceTest {
                         .profilePicture(profileDto.getProfilePicture())
                         .build());
         //when
-        ProfileDto user = userService.load(profileDto.getUserName());
+        ProfileDto user = userService.loadProfile(profileDto.getUserName());
 
         //then
         assertThat(user.getUserName()).isEqualTo(profileDto.getUserName());
