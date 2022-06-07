@@ -35,8 +35,8 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createAccessToken(String kakaoId, List<Role> roles) {
-        Claims claims = Jwts.claims().setSubject(kakaoId);
+    public String createAccessToken(String oauthId, List<Role> roles) {
+        Claims claims = Jwts.claims().setSubject(oauthId);
         claims.put(AUTHORITIES_KEY, roles.stream()
                 .map(Role::getAuthority)
                 .filter(Objects::nonNull)
