@@ -25,7 +25,7 @@ public class UserUtilTest {
     UserUtil userUtil;
 
     @BeforeEach
-    @DisplayName("")
+    @DisplayName("testing 하기위해 user를 db에 저장 후 SecurityContext에 저장")
     void registerUser() {
         User taemin = User.builder()
                 .nickname("김태민")
@@ -46,8 +46,13 @@ public class UserUtilTest {
     }
 
     @Test
+    @DisplayName("user가 잘 불러와 지나요?")
     void currentUserTest() {
+        //given
         User currentUser = userUtil.getCurrentUser();
+
+        //when
+        //then
         Assertions.assertThat("김태민").isEqualTo(currentUser.getNickname());
     }
 }
