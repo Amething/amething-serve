@@ -3,6 +3,7 @@ package com.server.amething.domain.user.service;
 import com.server.amething.domain.auth.dto.UserProfileResponseDto;
 import com.server.amething.domain.user.User;
 import com.server.amething.domain.user.enum_type.Role;
+import com.server.amething.domain.user.dto.ProfileDto;
 import com.server.amething.domain.user.repository.UserRepository;
 import com.server.amething.global.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -88,4 +89,9 @@ public class UserServiceImpl implements UserService{
         user.changeNickname(userProfileResponseDto.getProperties().getNickname());
     }
 
+    @Override
+    public ProfileDto loadProfile(String nickname) {
+        ProfileDto profileDto = userRepository.findProfileByNickname(nickname);
+        return profileDto;
+    }
 }

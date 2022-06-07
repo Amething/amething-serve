@@ -3,6 +3,8 @@ package com.server.amething.domain.question;
 import com.server.amething.domain.user.User;
 import com.server.amething.domain.question.enum_type.QuestionType;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -16,7 +18,8 @@ public class Question {
     @Column(name = "question_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
     private User user;
 
