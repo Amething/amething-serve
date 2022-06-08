@@ -13,13 +13,13 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public ProfileDto findProfileByUsername(String username) {
+    public ProfileDto findProfileByNickname(String nickname) {
         return queryFactory.from(user)
                 .select(Projections.constructor(ProfileDto.class,
-                        user.userName,
+                        user.nickname,
                         user.profilePicture
                         ))
-                .where(user.userName.eq(username))
+                .where(user.nickname.eq(nickname))
                 .fetchOne();
     }
 }

@@ -18,9 +18,9 @@ public class UserController {
     private final UserService userService;
     private final ResponseService responseService;
 
-    @GetMapping("/user/{userName}")
-    public SingleResult<ProfileDto> loadProfile(@PathVariable String userName){
-        ProfileDto profileDto = userService.loadProfile(userName);
+    @GetMapping("/user/{nickname}")
+    public SingleResult<ProfileDto> loadProfile(@PathVariable String nickname){
+        ProfileDto profileDto = userService.loadProfile(nickname);
         return responseService.getSingleResult(profileDto);
     }
 }
