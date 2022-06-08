@@ -18,7 +18,7 @@ public class UserController {
     private final UserService userService;
     private final ResponseService responseService;
 
-    @GetMapping("/user/{nickname}")
+    @GetMapping("/user/{oauthId}")
     public SingleResult<ProfileDto> loadProfile(@PathVariable Long oauthId){
         ProfileDto profileDto = userService.loadProfile(oauthId);
         return responseService.getSingleResult(profileDto);
