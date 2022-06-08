@@ -40,13 +40,15 @@ class UserControllerTest {
     @DisplayName("프로필 구현을 위한 정보를 가져오는 컨트롤러")
     void loadProfile() throws Exception {
         //given
+        Long id = 1234567891L;
         ProfileDto profileDto = new ProfileDto("user","img");
         userRepository.save(User.builder()
+                .oauthId(id)
                 .nickname(profileDto.getUserName())
                 .profilePicture(profileDto.getProfilePicture())
                 .build());
         //when
-        final ResultActions resultActions = mvc.perform(get("/v1/user/{forumName}", profileDto.getUserName())
+        final ResultActions resultActions = mvc.perform(get("/v1/user/{id}", id)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8"));
         //then
