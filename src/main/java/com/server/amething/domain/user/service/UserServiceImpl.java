@@ -90,8 +90,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public ProfileDto loadProfile(String nickname) {
-        ProfileDto profileDto = userRepository.findProfileByNickname(nickname);
+    public ProfileDto loadProfile(Long oauthId) {
+        ProfileDto profileDto = userRepository.findProfileByOauthId(oauthId);
         return profileDto;
     }
 }
