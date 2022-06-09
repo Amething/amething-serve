@@ -23,11 +23,12 @@ class UserServiceTest {
     void loadProfile() {
         //given
         Long id = 1234567891L;
-        ProfileDto profileDto = new ProfileDto("user","img");
+        ProfileDto profileDto = new ProfileDto("user","img","안녕하세요 user입니다.");
         userRepository.save(User.builder()
                         .oauthId(id)
                         .nickname(profileDto.getUserName())
                         .profilePicture(profileDto.getProfilePicture())
+                        .bio(profileDto.getBio())
                         .build());
         //when
         ProfileDto user = userService.loadProfile(id);
