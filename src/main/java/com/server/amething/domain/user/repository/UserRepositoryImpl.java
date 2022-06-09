@@ -4,6 +4,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.server.amething.domain.user.dto.ProfileDto;
 import lombok.RequiredArgsConstructor;
+import java.util.Optional;
 
 import static com.server.amething.domain.user.QUser.user;
 
@@ -14,12 +15,13 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
 
     @Override
     public ProfileDto findProfileByOauthId(Long oauthId) {
-        return queryFactory.from(user)
+    public Optional<ProfileDto> findProfileByOauthId(Long oauthId) {
+        return Optional.ofNullable(queryFactory.from(user)
                 .select(Projections.constructor(ProfileDto.class,
                         user.nickname,
-                        user.profilePicture
+                        user.profilePicture,
                         ))
                 .where(user.oauthId.eq(oauthId))
-                .fetchOne();
+                .fetchOne());
     }
 }
