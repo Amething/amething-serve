@@ -41,11 +41,12 @@ class UserControllerTest {
     void loadProfile() throws Exception {
         //given
         Long id = 1234567891L;
-        ProfileDto profileDto = new ProfileDto("user","img");
+        ProfileDto profileDto = new ProfileDto("user","img","Hello!!");
         userRepository.save(User.builder()
                 .oauthId(id)
                 .nickname(profileDto.getUserName())
                 .profilePicture(profileDto.getProfilePicture())
+                .bio(profileDto.getBio())
                 .build());
         //when
         final ResultActions resultActions = mvc.perform(get("/v1/user/{id}", id)
