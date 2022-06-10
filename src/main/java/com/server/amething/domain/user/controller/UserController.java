@@ -5,10 +5,8 @@ import com.server.amething.domain.user.service.UserService;
 import com.server.amething.global.response.ResponseService;
 import com.server.amething.global.response.result.SingleResult;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1")
@@ -18,6 +16,7 @@ public class UserController {
     private final UserService userService;
     private final ResponseService responseService;
 
+    @ResponseStatus(HttpStatus.OK )
     @GetMapping("/user/{oauthId}")
     public SingleResult<ProfileDto> loadProfile(@PathVariable Long oauthId){
         ProfileDto profileDto = userService.loadProfile(oauthId);
