@@ -4,11 +4,11 @@ import com.server.amething.domain.user.dto.ProfileDto;
 import com.server.amething.domain.user.service.UserService;
 import com.server.amething.global.response.ResponseService;
 import com.server.amething.global.response.result.SingleResult;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1")
@@ -18,9 +18,14 @@ public class UserController {
     private final UserService userService;
     private final ResponseService responseService;
 
-    @GetMapping("/user/{nickname}")
-    public SingleResult<ProfileDto> loadProfile(@PathVariable String nickname){
-        ProfileDto profileDto = userService.loadProfile(nickname);
+    @ResponseStatus(HttpStatus.OK )
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header"),
+            @ApiImplicitParam(name = "oauthId", value = "oauth 로그인시 기본 지급되는 Id", required = true, dataType = "Long", paramType = "path")
+    })
+    @GetMapping("/user/{oauthId}")
+    public SingleResult<ProfileDto> loadProfile(@PathVariable Long oauthId){
+        ProfileDto profileDto = userService.loadProfile(oauthId);
         return responseService.getSingleResult(profileDto);
     }
 }

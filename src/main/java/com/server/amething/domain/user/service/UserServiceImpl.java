@@ -89,9 +89,18 @@ public class UserServiceImpl implements UserService{
         user.changeNickname(userProfileResponseDto.getProperties().getNickname());
     }
 
+    /**
+     * User의 프로필 정보를 가져오는 메소드.
+     * PathVariable 어노테이션을 통해 URL에서 고유한 oauthId를 가져온 후에
+     * 해당 oauthId을 기반으로 해당 유저의 프로필 정보를 조회한다.
+     * 그리고 조회한 유저의 프로필 정보를 return 한다.
+     * @param oauthId User들의 고유한 ID
+     * @return profileDto - 조회한 유저의 프로필 정보
+     * @author 정용우
+    */
     @Override
-    public ProfileDto loadProfile(String nickname) {
-        ProfileDto profileDto = userRepository.findProfileByNickname(nickname);
-        return profileDto;
+    public ProfileDto loadProfile(Long oauthId) {
+        return userRepository.findProfileByOauthId(oauthId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 아이디로 만들어진 프로필이 존재하지 않습니다."));
     }
 }

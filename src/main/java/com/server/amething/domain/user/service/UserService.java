@@ -9,5 +9,5 @@ import java.util.Map;
 
 public interface UserService {
     Map<String, String> login(UserProfileResponseDto userProfileResponseDto, List<Role> roles);
-    ProfileDto loadProfile(String nickname);
+    ProfileDto loadProfile(Long oauthId);
 }
