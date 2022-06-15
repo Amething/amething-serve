@@ -22,9 +22,10 @@ public class TokenServiceImpl implements TokenService {
         User user = userRepository.findByOauthId(oauthId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 
-        String userRefreshToken = user.getRefreshToken().substring(7);
+        String userRefreshToken = user.getRefreshToken();
+        if (userRefreshToken == null) throw new IllegalStateException("로그아웃 한 회원입니다.");
 
-        if (userRefreshToken.equals(requestRefreshToken)) {
+        if (userRefreshToken.equals(requestRefreshToken.substring(7))) {
             String accessToken = jwtTokenProvider.createAccessToken(user.getUsername(), user.getRoles());
             return accessToken;
         } else throw new IllegalArgumentException("refreshToken이 없거나 유효하지 않습니다.");
