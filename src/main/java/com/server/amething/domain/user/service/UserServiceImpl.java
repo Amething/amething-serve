@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService{
         Optional<User> user = userRepository.findByOauthId(userProfileResponseDto.getId());
         Map<String, String> tokens = createToken(String.valueOf(userProfileResponseDto.getId()), roles);
 
-        if (user.isPresent()) updateUser(user.get(), userProfileResponseDto);
+        if (user.isPresent()) updateUser(user.get(), userProfileResponseDto, tokens.get("refreshToken"));
         else saveUser(userProfileResponseDto, tokens.get("refreshToken"));
 
         return tokens;
@@ -84,9 +84,10 @@ public class UserServiceImpl implements UserService{
      * @param userProfileResponseDto user의 kakao oauth 메타데이터
      * @author 김태민
      */
-    private void updateUser(User user, UserProfileResponseDto userProfileResponseDto) {
+    private void updateUser(User user, UserProfileResponseDto userProfileResponseDto, String refreshToken) {
         user.changeProfilePicture(userProfileResponseDto.getProperties().getProfile_image());
         user.changeNickname(userProfileResponseDto.getProperties().getNickname());
+        user.changeRefreshToken(refreshToken);
     }
 
     /**
