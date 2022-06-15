@@ -10,8 +10,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,8 @@ public class JwtTokenProvider {
     private final long REFRESH_TOKEN_EXPIRED_MILLI_SECOND = 1000L * 60 * 60 * 24 * 30 * 6; // 180일
 
     private final String AUTHORITIES_KEY = "auth";
+    private final String REFRESH_HEADER = "RefreshToken";
+    private final String PREFIX = "Bearer ";
 
     private final CustomUserDetails customUserDetails;
 
@@ -69,38 +73,36 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String accessToken) {
-        String oauthId = parseClaims(accessToken).getSubject();
-
-        UserDetails userDetails = customUserDetails.loadUserByUsername(oauthId);
+        UserDetails userDetails = customUserDetails.loadUserByUsername(getOauthId(accessToken));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     public boolean validateToken(String token) {
-        try {
-            Jwts.parserBuilder()
-                    .setSigningKey(secretKey).build().parseClaimsJws(token);
-            return true;
-        }
-         catch (SecurityException | MalformedJwtException e) {
-            log.info(" === 잘못된 JWT 서명입니다. === ");
-        } catch (ExpiredJwtException e) {
-            log.info(" === 만료된 JWT 토큰입니다. === {}");
-        } catch (UnsupportedJwtException e) {
-            log.info(" === 지원하지 않는 JWT 토큰입니다. === ");
-        } catch (IllegalArgumentException e) {
-            log.info(" === JWT 토큰이 잘못되었습니다 === ");
-        }
-        return false;
+        Date expirationTime = parseClaims(token).getExpiration();
+        return expirationTime.after(new Date());
     }
 
-    private Claims parseClaims(String accessToken) {
+    private Claims parseClaims(String token) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(secretKey)
-                    .build().parseClaimsJws(accessToken).getBody();
+                    .build().parseClaimsJws(token).getBody();
         } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
+    }
+
+    public String getOauthId(String token) {
+        return parseClaims(token).getSubject();
+    }
+
+    public String resolveRefreshToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader(REFRESH_HEADER);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(PREFIX)) {
+            return bearerToken.substring(7);
+        }
+
+        return null;
     }
 
 }
