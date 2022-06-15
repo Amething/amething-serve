@@ -6,6 +6,7 @@ import com.server.amething.domain.user.enum_type.Role;
 import com.server.amething.domain.user.dto.ProfileDto;
 import com.server.amething.domain.user.repository.UserRepository;
 import com.server.amething.global.jwt.JwtTokenProvider;
+import com.server.amething.global.util.UserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ public class UserServiceImpl implements UserService{
 
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
+    private final UserUtil userUtil;
 
     /**
      * user가 로그인 할때 실행되는 메소드.
@@ -40,6 +42,14 @@ public class UserServiceImpl implements UserService{
         else saveUser(userProfileResponseDto, tokens.get("refreshToken"));
 
         return tokens;
+    }
+
+    /**
+     * logout을 하는 로직 refreshToken을 null로 생성해서 더이상 accessToken을 재발급 받지 못하게 한다.
+     */
+    @Override
+    public void logout() {
+        userUtil.getCurrentUser().changeRefreshToken(null);
     }
 
     /**
@@ -104,4 +114,5 @@ public class UserServiceImpl implements UserService{
         return userRepository.findProfileByOauthId(oauthId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 아이디로 만들어진 프로필이 존재하지 않습니다."));
     }
+
 }
