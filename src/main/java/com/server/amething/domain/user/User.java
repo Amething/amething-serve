@@ -95,4 +95,8 @@ public class User implements UserDetails {
     public void changeNickname(String nickname) {
         this.nickname = nickname;
     }
+
+    public void changeRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 }

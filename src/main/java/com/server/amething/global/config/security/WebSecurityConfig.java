@@ -1,6 +1,15 @@
 package com.server.amething.global.config.security;
 
+import com.server.amething.global.jwt.JwtTokenProvider;
+import com.server.amething.global.jwt.config.JwtFilterConfig;
+import com.server.amething.global.jwt.exception.ExceptionHandlerFilter;
+//import com.server.amething.global.jwt.exception.ExceptionHandlerFilterConfig;
+import com.server.amething.global.jwt.exception.ExceptionHandlerFilterConfig;
+import com.server.amething.global.jwt.exception.JwtAccessDeniedHandler;
+import com.server.amething.global.jwt.exception.JwtAuthenticationEntryPoint;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -9,8 +18,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
 @EnableWebSecurity //(debug = true)
+@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final JwtTokenProvider jwtTokenProvider;
+    private final ExceptionHandlerFilter exceptionHandlerFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
@@ -22,8 +34,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
-                .antMatchers("/**").permitAll()
+//                .antMatchers("/v1/user/**").hasRole("GUEST")
                 .anyRequest().permitAll();
+
+        http.exceptionHandling()
+                .accessDeniedHandler(new JwtAccessDeniedHandler())
+                .authenticationEntryPoint(new JwtAuthenticationEntryPoint());
+
+        http.apply(new JwtFilterConfig(jwtTokenProvider));
+        http.apply(new ExceptionHandlerFilterConfig(exceptionHandlerFilter));
     }
 
     @Override
@@ -39,4 +58,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/configuration/security")
                 .antMatchers("/context/**");
     }
+
 }
