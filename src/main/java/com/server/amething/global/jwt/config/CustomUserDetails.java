@@ -18,6 +18,6 @@ public class CustomUserDetails implements UserDetailsService {
         long id = Long.parseLong(username);
 
         return userRepository.findByOauthId(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 회원입니다."));
     }
 }
