@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
-//                .antMatchers("/**") // 후에 Security 설정을 완료하고 제거
+                .antMatchers("/**") // 후에 Security 설정을 완료하고 제거
                 .antMatchers("/h2-console/**", "/exception/**")
                 .antMatchers("/swagger-resources/**")
                 .antMatchers("/swagger-ui.html")
