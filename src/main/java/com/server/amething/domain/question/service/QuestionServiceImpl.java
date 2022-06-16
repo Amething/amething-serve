@@ -20,6 +20,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     private final UserRepository userRepository;
     private final QuestionRepository questionRepository;
+    private final UserUtil userUtil;
 
     @Override
     public void createQuestion(Long oauthId, QuestionDto questionDto) {
@@ -31,5 +32,12 @@ public class QuestionServiceImpl implements QuestionService {
                 .type(QuestionType.UNREPLY)
                 .build();
         questionRepository.save(question);
+    }
+
+    @Override
+    public List<QuestionDto> loadQuestion() {
+        User user = userUtil.getCurrentUser();
+        return questionRepository.findAllDescriptionByUser(user)
+                .orElseThrow(()-> new IllegalArgumentException("당신의 질문을 확인할 수 없습니다!"));
     }
 }
