@@ -30,4 +30,7 @@ public class Question {
     @Column(name = "question_type")
     private QuestionType type;
 
+    public void changeQuestionType(QuestionType questionType) {
+        this.type = questionType;
+    }
 }
