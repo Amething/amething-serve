@@ -1,16 +1,17 @@
 package com.server.amething.domain.question.service;
 
 import com.server.amething.domain.question.Question;
+import com.server.amething.domain.question.dto.QuestionDto;
 import com.server.amething.domain.question.enum_type.QuestionType;
 import com.server.amething.domain.question.repository.QuestionRepository;
 import com.server.amething.domain.user.User;
 import com.server.amething.domain.user.repository.UserRepository;
+import com.server.amething.global.util.UserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,11 +22,12 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
 
     @Override
-    public void createQuestion(Long oauthId, String description) {
-        Optional<User> user = userRepository.findByOauthId(oauthId);
+    public void createQuestion(Long oauthId, QuestionDto questionDto) {
+        User user = userRepository.findByOauthId(oauthId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));
         Question question = Question.builder()
-                .user(user.get())
-                .description(description)
+                .user(user)
+                .description(questionDto.getDescription())
                 .type(QuestionType.UNREPLY)
                 .build();
         questionRepository.save(question);
