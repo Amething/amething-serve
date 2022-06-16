@@ -18,10 +18,11 @@ public class AnswerController {
     private final AnswerService answerService;
     private final ResponseService responseService;
 
-    @PostMapping("/questionId}/answer")
+    @PostMapping("/{questionId}/answer")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "accessToken", required = true, dataType = "String", paramType = "header"),
+            @ApiImplicitParam(name = "questionId", value = "질문의 id", required = true, dataType = "Long", paramType = "path")
     })
     private CommonResult registrationAnswer(@PathVariable Long questionId, @RequestBody RegistrationAnswerDto registrationAnswerDto) {
         answerService.registrationAnswer(questionId, registrationAnswerDto);
