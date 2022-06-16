@@ -4,6 +4,7 @@ import com.server.amething.domain.answer.Answer;
 import com.server.amething.domain.answer.dto.RegistrationAnswerDto;
 import com.server.amething.domain.answer.repository.AnswerRepository;
 import com.server.amething.domain.question.Question;
+import com.server.amething.domain.question.enum_type.QuestionType;
 import com.server.amething.domain.question.repository.QuestionRepository;
 import com.server.amething.domain.user.User;
 import com.server.amething.global.util.UserUtil;
@@ -32,6 +33,7 @@ public class AnswerServiceImpl implements AnswerService {
                 .description(registrationAnswerDto.getDescription())
                 .build();
 
+        question.changeQuestionType(QuestionType.PIN);
         answerRepository.save(answer);
     }
 }
