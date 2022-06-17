@@ -1,6 +1,8 @@
 package com.server.amething.domain.question.service;
 
+import com.server.amething.domain.question.Question;
 import com.server.amething.domain.question.dto.QuestionDto;
+import com.server.amething.domain.question.enum_type.QuestionType;
 import com.server.amething.domain.question.repository.QuestionRepository;
 import com.server.amething.domain.user.User;
 import com.server.amething.domain.user.enum_type.Role;
@@ -64,13 +66,18 @@ class QuestionServiceImplTest {
                 .build();
         userRepository.save(user);
         List<QuestionDto> questions;
-        QuestionDto questionDto1 = new QuestionDto("개발자를 시작하시게 된 경위가 무엇인가요?");
+        Question question = Question.builder()
+                .id(1L)
+                .user(user)
+                .type(QuestionType.PIN) //해당 컬럼의 type에 따라 출력 여부가 달라짐.
+                .description("개발자를 시작하시게 된 경위가 무엇인가요?")
+                .build();
         QuestionDto questionDto2 = new QuestionDto("백엔드 시작하시게 된 경위가 무엇인가요?");
-        QuestionDto questionDto3 = new QuestionDto("개발자를 시작하시게 된 경위가 무엇인가요?");
+        QuestionDto questionDto3 = new QuestionDto("학교에서 무엇을 배우나요??");
 
 
         //when
-        questionService.createQuestion(2249049915L,questionDto1);
+        questionRepository.save(question);
         questionService.createQuestion(2249049915L,questionDto2);
         questionService.createQuestion(2249049915L,questionDto3);
         questions = questionRepository.findUnreplyDescriptionByUser(user)
