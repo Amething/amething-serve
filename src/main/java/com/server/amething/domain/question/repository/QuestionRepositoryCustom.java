@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface QuestionRepositoryCustom{
     Optional<List<QuestionDto>> findUnreplyDescriptionByUser(User user);
+    Optional<List<QuestionDto>> findPinDescriptionByUser(User user);
 }
