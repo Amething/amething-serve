@@ -19,8 +19,8 @@ public class Answer {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    @Column(name = "answer_description")
-    private String description;
+    @Column(name = "question_title")
+    private String title;
 
 }
 
