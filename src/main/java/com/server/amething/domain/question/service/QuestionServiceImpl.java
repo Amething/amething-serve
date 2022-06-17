@@ -42,8 +42,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionDto> loadPinQuestion() {
-        return null;
+    public List<QuestionDto> loadPinQuestion(Long oauthId) {
+        User user = userRepository.findByOauthId(oauthId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));
+        return questionRepository.findPinDescriptionByUser(user)
+                .orElseThrow(()-> new IllegalArgumentException("해당 사용자의 질문이 존재하지 않습니다!"));
     }
 
 }
