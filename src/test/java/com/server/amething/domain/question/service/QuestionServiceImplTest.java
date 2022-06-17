@@ -55,7 +55,7 @@ class QuestionServiceImplTest {
 
     @Test
     @DisplayName("저장된 미답변 질문을 가져오는 로직")
-    void loadQuestion() {
+    void loadUnreplyQuestion() {
         //given
         User user = User.builder()
                 .bio("")

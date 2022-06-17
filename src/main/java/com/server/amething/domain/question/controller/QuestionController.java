@@ -30,13 +30,14 @@ public class QuestionController {
         questionService.createQuestion(oauthId, questionDto);
         return responseService.getSuccessResult();
     }
+
     @ResponseStatus(HttpStatus.OK )
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header"),
     })
     @GetMapping("/user/me/questions")
-    public SingleResult<List> loadQuestion(){
-        List<QuestionDto> questions = questionService.loadQuestion();
+    public SingleResult<List> loadUnreplyQuestion(){
+        List<QuestionDto> questions = questionService.loadUnreplyQuestion();
         return responseService.getSingleResult(questions);
     }
 }
