@@ -35,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
 //                .antMatchers("/v1/user/**").hasRole("GUEST")
+//                .antMatchers("/v1/me/questions").hasRole("ROLE_MEMBER")
                 .anyRequest().permitAll();
 
         http.exceptionHandling()
