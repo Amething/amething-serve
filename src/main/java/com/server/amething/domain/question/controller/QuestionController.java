@@ -40,4 +40,10 @@ public class QuestionController {
         List<QuestionDto> questions = questionService.loadUnreplyQuestion();
         return responseService.getSingleResult(questions);
     }
+
+    @GetMapping
+    public SingleResult<List> loadPin(){
+
+        return null;
+    }
 }

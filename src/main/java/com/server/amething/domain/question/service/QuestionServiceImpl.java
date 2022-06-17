@@ -40,4 +40,10 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.findAllDescriptionByUser(user)
                 .orElseThrow(()-> new IllegalArgumentException("당신의 질문을 확인할 수 없습니다!"));
     }
+
+    @Override
+    public List<QuestionDto> loadPinQuestion() {
+        return null;
+    }
+
 }
