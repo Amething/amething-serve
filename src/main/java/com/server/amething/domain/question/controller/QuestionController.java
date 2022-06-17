@@ -41,9 +41,9 @@ public class QuestionController {
         return responseService.getSingleResult(questions);
     }
 
-    @GetMapping
-    public SingleResult<List> loadPin(){
-
+    @GetMapping("/user/{oauthId}/pin")
+    public SingleResult<List> loadPin(@PathVariable Long oauthId){
+        List<QuestionDto> questions = questionService.loadPinQuestion(oauthId);
         return null;
     }
 }
