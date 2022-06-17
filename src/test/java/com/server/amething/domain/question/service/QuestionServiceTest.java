@@ -89,5 +89,41 @@ class QuestionServiceTest {
 
     @Test
     void loadPinQuestion() {
+        //given
+        User user = User.builder()
+                .bio("")
+                .nickname("김태민")
+                .oauthId(2249049915L)
+                .profilePicture("")
+                .roles(Collections.singletonList(Role.ROLE_MEMBER))
+                .refreshToken("Bearer refreshToken")
+                .build();
+        userRepository.save(user);
+
+        List<QuestionDto> questions;
+
+        Question question = Question.builder()
+                .id(1L)
+                .user(user)
+                .type(QuestionType.PIN) //해당 컬럼의 type에 따라 출력 여부가 달라짐.
+                .description("개발자를 시작하시게 된 경위가 무엇인가요?")
+                .build();
+        Question question1 = Question.builder()
+                .id(2L)
+                .user(user)
+                .type(QuestionType.PIN) //해당 컬럼의 type에 따라 출력 여부가 달라짐.
+                .description("백엔드 시작하시게 된 경위가 무엇인가요?")
+                .build();
+        QuestionDto questionDto3 = new QuestionDto("학교에서 무엇을 배우나요??");
+
+        //when
+        questionRepository.save(question);
+        questionRepository.save(question1);
+        questionService.createQuestion(2249049915L,questionDto3);
+        questions = questionRepository.findPinDescriptionByUser(user)
+                .orElseThrow(()-> new IllegalArgumentException("당신의 질문을 확인할 수 없습니다!"));
+
+        //then
+        questions.forEach(questionDto -> System.out.println(questionDto.getDescription()));
     }
 }
