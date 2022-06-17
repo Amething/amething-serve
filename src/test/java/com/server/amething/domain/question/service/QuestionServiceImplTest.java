@@ -84,6 +84,6 @@ class QuestionServiceImplTest {
                 .orElseThrow(()-> new IllegalArgumentException("당신의 질문을 확인할 수 없습니다!"));
 
         //then
-        questions.stream().forEach(System.out::println);
+        questions.forEach(questionDto -> System.out.println(questionDto.getDescription()));
     }
 }
