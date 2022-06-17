@@ -29,4 +29,15 @@ public class QuestionRepositoryImpl implements QuestionRepositoryCustom{
                 .where(question.user.eq(user).and(question.type.eq(QuestionType.UNREPLY)))
                 .fetch());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<List<QuestionDto>> findPinDescriptionByUser(User user) {
+        return Optional.ofNullable(queryFactory.from(question)
+                .select(Projections.constructor(QuestionDto.class,
+                        question.description
+                ))
+                .where(question.user.eq(user).and(question.type.eq(QuestionType.PIN)))
+                .fetch());
+    }
 }
