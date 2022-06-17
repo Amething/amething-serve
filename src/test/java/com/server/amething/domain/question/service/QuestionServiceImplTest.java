@@ -1,6 +1,5 @@
 package com.server.amething.domain.question.service;
 
-import com.server.amething.domain.question.Question;
 import com.server.amething.domain.question.dto.QuestionDto;
 import com.server.amething.domain.question.repository.QuestionRepository;
 import com.server.amething.domain.user.User;
@@ -14,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,7 +44,7 @@ class QuestionServiceImplTest {
         QuestionDto questionDto = new QuestionDto("개발자를 시작하시게 된 경위가 무엇인가요?");
         //when
         questionService.createQuestion(2249049915L,questionDto);
-        questions = questionRepository.findAllDescriptionByUser(user)
+        questions = questionRepository.findUnreplyDescriptionByUser(user)
                 .orElseThrow(()-> new IllegalArgumentException("당신의 질문을 확인할 수 없습니다!"));
         //then
         assertEquals(questions.get(0).getDescription(), "개발자를 시작하시게 된 경위가 무엇인가요?");
@@ -76,7 +73,7 @@ class QuestionServiceImplTest {
         questionService.createQuestion(2249049915L,questionDto1);
         questionService.createQuestion(2249049915L,questionDto2);
         questionService.createQuestion(2249049915L,questionDto3);
-        questions = questionRepository.findAllDescriptionByUser(user)
+        questions = questionRepository.findUnreplyDescriptionByUser(user)
                 .orElseThrow(()-> new IllegalArgumentException("당신의 질문을 확인할 수 없습니다!"));
 
         //then

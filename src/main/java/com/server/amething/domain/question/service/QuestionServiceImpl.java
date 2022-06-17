@@ -37,7 +37,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<QuestionDto> loadUnreplyQuestion() {
         User user = userUtil.getCurrentUser();
-        return questionRepository.findAllDescriptionByUser(user)
+        return questionRepository.findUnreplyDescriptionByUser(user)
                 .orElseThrow(()-> new IllegalArgumentException("당신의 질문을 확인할 수 없습니다!"));
     }
 
