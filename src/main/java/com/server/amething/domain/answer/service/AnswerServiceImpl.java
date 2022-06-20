@@ -26,7 +26,7 @@ public class AnswerServiceImpl implements AnswerService {
 
         User currentUser = userUtil.getCurrentUser();
 
-        if(!currentUser.getUsername().equals(question.getUser().getUsername())) throw new IllegalArgumentException("답변을 할 권한이 없습니다.");
+        if(!currentUser.getId().equals(question.getUser().getId())) throw new IllegalArgumentException("답변을 할 권한이 없습니다.");
 
         Answer answer = Answer.builder()
                 .question(question)
