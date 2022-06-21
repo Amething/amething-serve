@@ -44,6 +44,6 @@ public class QuestionController {
     @GetMapping("/user/{oauthId}/pin")
     public SingleResult<List> findPinQuestion(@PathVariable Long oauthId){
         List<QuestionDto> questions = questionService.findPinQuestion(oauthId);
-        return null;
+        return responseService.getSingleResult(questions);
     }
 }
