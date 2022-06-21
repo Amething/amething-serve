@@ -42,7 +42,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionDto> findPinQuestion(Long oauthId) {
+    public List<QuestionAndAnswerDto> findPinQuestion(Long oauthId) {
         User user = userRepository.findByOauthId(oauthId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));
         return questionRepository.findPinDescriptionByUser(user);

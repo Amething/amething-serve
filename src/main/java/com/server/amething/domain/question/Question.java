@@ -23,8 +23,8 @@ public class Question {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "question_title")
-    private String title;
+    @Column(name = "question_description")
+    private String description;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "question_type")

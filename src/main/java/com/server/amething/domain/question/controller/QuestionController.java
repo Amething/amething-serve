@@ -1,5 +1,6 @@
 package com.server.amething.domain.question.controller;
 
+import com.server.amething.domain.question.dto.QuestionAndAnswerDto;
 import com.server.amething.domain.question.dto.QuestionDto;
 import com.server.amething.domain.question.service.QuestionService;
 import com.server.amething.global.response.ResponseService;
@@ -43,7 +44,7 @@ public class QuestionController {
 
     @GetMapping("/user/{oauthId}/pin")
     public SingleResult<List> findPinQuestion(@PathVariable Long oauthId){
-        List<QuestionDto> questions = questionService.findPinQuestion(oauthId);
+        List<QuestionAndAnswerDto> questions = questionService.findPinQuestion(oauthId);
         return responseService.getSingleResult(questions);
     }
 }

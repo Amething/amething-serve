@@ -19,7 +19,7 @@ public class Answer {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    @Column(name = "question_title")
+    @Column(name = "answer_title")
     private String title;
 
 }

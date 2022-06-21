@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface QuestionService {
     void createQuestion(Long oauthId, QuestionDto questionDto);
-    List<QuestionDto> loadUnreplyQuestion();
-    List<QuestionAndAnswerDto> loadPinQuestion(Long oauthId);
+    List<QuestionDto> findUnReplyQuestion();
+    List<QuestionAndAnswerDto> findPinQuestion(Long oauthId);
 }

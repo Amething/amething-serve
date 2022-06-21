@@ -33,6 +33,8 @@ class QuestionServiceTest {
     QuestionRepository questionRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    AnswerRepository answerRepository;
 
     @BeforeEach
     @DisplayName("질문 기능을 테스트 하기 위해 User 데이터 생성")
@@ -94,7 +96,7 @@ class QuestionServiceTest {
         //given
         User user = userRepository.findByOauthId(2249049915L)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));        
-        List<QuestionDto> questions;
+        List<QuestionAndAnswerDto> questions;
 
         Question question = Question.builder()
                 .id(1L)
@@ -111,8 +113,7 @@ class QuestionServiceTest {
         //when
         questionRepository.save(question);
         answerRepository.save(answer);
-        questions = questionRepository.findPinDescriptionByUser(user)
-                .orElseThrow(()-> new IllegalArgumentException("당신의 질문을 확인할 수 없습니다!"));
+        questions = questionRepository.findPinDescriptionByUser(user);
 
         //then
         questions.forEach(questionAndAnswerDto -> System.out.println(questionAndAnswerDto.getDescription() +" / "+ questionAndAnswerDto.getTitle()));
