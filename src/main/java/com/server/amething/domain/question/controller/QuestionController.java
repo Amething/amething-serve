@@ -36,14 +36,14 @@ public class QuestionController {
             @ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header"),
     })
     @GetMapping("/user/me/questions")
-    public SingleResult<List> loadUnreplyQuestion(){
-        List<QuestionDto> questions = questionService.loadUnreplyQuestion();
+    public SingleResult<List> findUnReplyQuestion(){
+        List<QuestionDto> questions = questionService.findUnReplyQuestion();
         return responseService.getSingleResult(questions);
     }
 
     @GetMapping("/user/{oauthId}/pin")
-    public SingleResult<List> loadPin(@PathVariable Long oauthId){
-        List<QuestionDto> questions = questionService.loadPinQuestion(oauthId);
+    public SingleResult<List> findPinQuestion(@PathVariable Long oauthId){
+        List<QuestionDto> questions = questionService.findPinQuestion(oauthId);
         return null;
     }
 }

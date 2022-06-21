@@ -35,18 +35,16 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionDto> loadUnreplyQuestion() {
+    public List<QuestionDto> findUnReplyQuestion() {
         User user = userUtil.getCurrentUser();
-        return questionRepository.findUnreplyDescriptionByUser(user)
-                .orElseThrow(()-> new IllegalArgumentException("당신의 질문을 확인할 수 없습니다!"));
+        return questionRepository.findUnReplyDescriptionByUser(user);
     }
 
     @Override
-    public List<QuestionDto> loadPinQuestion(Long oauthId) {
+    public List<QuestionDto> findPinQuestion(Long oauthId) {
         User user = userRepository.findByOauthId(oauthId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));
-        return questionRepository.findPinDescriptionByUser(user)
-                .orElseThrow(()-> new IllegalArgumentException("해당 사용자의 질문이 존재하지 않습니다!"));
+        return questionRepository.findPinDescriptionByUser(user);
     }
 
 }

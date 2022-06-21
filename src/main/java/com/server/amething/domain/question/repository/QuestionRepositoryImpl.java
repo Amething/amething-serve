@@ -21,23 +21,23 @@ public class QuestionRepositoryImpl implements QuestionRepositoryCustom{
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<QuestionDto>> findUnreplyDescriptionByUser(User user) {
-        return Optional.ofNullable(queryFactory.from(question)
+    public List<QuestionDto> findUnReplyDescriptionByUser(User user) {
+        return queryFactory.from(question)
                 .select(Projections.constructor(QuestionDto.class,
                         question.description
                 ))
                 .where(question.user.eq(user).and(question.type.eq(QuestionType.UNREPLY)))
-                .fetch());
+                .fetch();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<List<QuestionDto>> findPinDescriptionByUser(User user) {
-        return Optional.ofNullable(queryFactory.from(question)
+    public List<QuestionDto> findPinDescriptionByUser(User user) {
+        return queryFactory.from(question)
                 .select(Projections.constructor(QuestionDto.class,
                         question.description
                 ))
                 .where(question.user.eq(user).and(question.type.eq(QuestionType.PIN)))
-                .fetch());
+                .fetch();
     }
 }
