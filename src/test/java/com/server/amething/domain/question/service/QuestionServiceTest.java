@@ -1,6 +1,10 @@
 package com.server.amething.domain.question.service;
 
 import com.server.amething.domain.question.Question;
+import com.server.amething.domain.answer.Answer;
+import com.server.amething.domain.answer.repository.AnswerRepository;
+import com.server.amething.domain.question.Question;
+import com.server.amething.domain.question.dto.QuestionAndAnswerDto;
 import com.server.amething.domain.question.dto.QuestionDto;
 import com.server.amething.domain.question.enum_type.QuestionType;
 import com.server.amething.domain.question.repository.QuestionRepository;
@@ -64,7 +68,8 @@ class QuestionServiceTest {
     void findUnReplyQuestion() {
         //given
         User user = userRepository.findByOauthId(2249049915L)
-                .orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));        List<QuestionDto> questions;
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));        
+        List<QuestionDto> questions;
         Question question = Question.builder()
                 .id(1L)
                 .user(user)
@@ -88,7 +93,8 @@ class QuestionServiceTest {
     void findPinQuestion() {
         //given
         User user = userRepository.findByOauthId(2249049915L)
-                .orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));        List<QuestionDto> questions;
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));        
+        List<QuestionDto> questions;
 
         Question question = Question.builder()
                 .id(1L)
@@ -96,21 +102,19 @@ class QuestionServiceTest {
                 .type(QuestionType.PIN) //해당 컬럼의 type에 따라 출력 여부가 달라짐.
                 .description("개발자를 시작하시게 된 경위가 무엇인가요?")
                 .build();
-        Question question1 = Question.builder()
-                .id(2L)
-                .user(user)
-                .type(QuestionType.PIN) //해당 컬럼의 type에 따라 출력 여부가 달라짐.
-                .description("백엔드 시작하시게 된 경위가 무엇인가요?")
+        Answer answer = Answer.builder()
+                .id(1L)
+                .question(question)
+                .title("고등학교에 입학하면서 시작하게 되었습니다!")
                 .build();
-        QuestionDto questionDto3 = new QuestionDto("학교에서 무엇을 배우나요??");
 
         //when
         questionRepository.save(question);
-        questionRepository.save(question1);
-        questionService.createQuestion(2249049915L,questionDto3);
-        questions = questionRepository.findPinDescriptionByUser(user);
+        answerRepository.save(answer);
+        questions = questionRepository.findPinDescriptionByUser(user)
+                .orElseThrow(()-> new IllegalArgumentException("당신의 질문을 확인할 수 없습니다!"));
 
         //then
-        questions.forEach(questionDto -> System.out.println(questionDto.getDescription()));
+        questions.forEach(questionAndAnswerDto -> System.out.println(questionAndAnswerDto.getDescription() +" / "+ questionAndAnswerDto.getTitle()));
     }
 }

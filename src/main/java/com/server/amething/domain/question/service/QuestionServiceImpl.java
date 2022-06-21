@@ -1,6 +1,7 @@
 package com.server.amething.domain.question.service;
 
 import com.server.amething.domain.question.Question;
+import com.server.amething.domain.question.dto.QuestionAndAnswerDto;
 import com.server.amething.domain.question.dto.QuestionDto;
 import com.server.amething.domain.question.enum_type.QuestionType;
 import com.server.amething.domain.question.repository.QuestionRepository;
@@ -46,5 +47,4 @@ public class QuestionServiceImpl implements QuestionService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));
         return questionRepository.findPinDescriptionByUser(user);
     }
-
 }

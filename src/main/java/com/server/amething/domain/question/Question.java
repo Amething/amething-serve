@@ -23,11 +23,14 @@ public class Question {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "question_description")
-    private String description;
+    @Column(name = "question_title")
+    private String title;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "question_type")
     private QuestionType type;
 
+    public void changeQuestionType(QuestionType questionType) {
+        this.type = questionType;
+    }
 }
