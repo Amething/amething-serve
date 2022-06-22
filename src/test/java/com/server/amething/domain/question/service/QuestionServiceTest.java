@@ -11,6 +11,7 @@ import com.server.amething.domain.question.repository.QuestionRepository;
 import com.server.amething.domain.user.User;
 import com.server.amething.domain.user.enum_type.Role;
 import com.server.amething.domain.user.repository.UserRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -62,7 +63,7 @@ class QuestionServiceTest {
         questionService.createQuestion(2249049915L,questionDto);
         questions = questionRepository.findUnReplyDescriptionByUser(user);
         //then
-        assertEquals(questions.get(0).getDescription(), "개발자를 시작하시게 된 경위가 무엇인가요?");
+        assertEquals(questions.get(0).getTitle(), "개발자를 시작하시게 된 경위가 무엇인가요?");
     }
 
     @Test
@@ -76,7 +77,7 @@ class QuestionServiceTest {
                 .id(1L)
                 .user(user)
                 .type(QuestionType.PIN) //해당 컬럼의 type에 따라 출력 여부가 달라짐.
-                .description("개발자를 시작하시게 된 경위가 무엇인가요?")
+                .title("개발자를 시작하시게 된 경위가 무엇인가요?")
                 .build();
         QuestionDto questionDto2 = new QuestionDto("백엔드 시작하시게 된 경위가 무엇인가요?");
         QuestionDto questionDto3 = new QuestionDto("학교에서 무엇을 배우나요??");
@@ -88,7 +89,7 @@ class QuestionServiceTest {
         questionService.createQuestion(2249049915L,questionDto3);
         questions = questionRepository.findUnReplyDescriptionByUser(user);
         //then
-        questions.forEach(questionDto -> System.out.println(questionDto.getDescription()));
+        questions.forEach(questionDto -> System.out.println(questionDto.getTitle()));
     }
 
     @Test
@@ -102,12 +103,12 @@ class QuestionServiceTest {
                 .id(1L)
                 .user(user)
                 .type(QuestionType.PIN) //해당 컬럼의 type에 따라 출력 여부가 달라짐.
-                .description("개발자를 시작하시게 된 경위가 무엇인가요?")
+                .title("개발자를 시작하시게 된 경위가 무엇인가요?")
                 .build();
         Answer answer = Answer.builder()
                 .id(1L)
                 .question(question)
-                .title("고등학교에 입학하면서 시작하게 되었습니다!")
+                .description("고등학교에 입학하면서 시작하게 되었습니다!")
                 .build();
 
         //when
@@ -116,6 +117,7 @@ class QuestionServiceTest {
         questions = questionRepository.findPinDescriptionByUser(user);
 
         //then
+        assertEquals(questions.size(),1);
         questions.forEach(questionAndAnswerDto -> System.out.println(questionAndAnswerDto.getDescription() +" / "+ questionAndAnswerDto.getTitle()));
     }
 }
