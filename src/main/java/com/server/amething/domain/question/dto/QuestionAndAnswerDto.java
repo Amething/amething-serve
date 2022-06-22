@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class QuestionAndAnswerDto {
 
+    private String title;
+
     private String description;
 
-    private String title;
 }

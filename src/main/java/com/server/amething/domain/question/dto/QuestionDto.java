@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class QuestionDto {
 
-    private String description;
+    private String title;
 
 }

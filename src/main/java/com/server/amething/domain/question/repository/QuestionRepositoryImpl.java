@@ -26,7 +26,7 @@ public class QuestionRepositoryImpl implements QuestionRepositoryCustom{
     public List<QuestionDto> findUnReplyDescriptionByUser(User user) {
         return queryFactory.from(question)
                 .select(Projections.constructor(QuestionDto.class,
-                        question.description
+                        question.title
                 ))
                 .where(question.user.eq(user).and(question.type.eq(QuestionType.UNREPLY)))
                 .fetch();
@@ -38,8 +38,8 @@ public class QuestionRepositoryImpl implements QuestionRepositoryCustom{
         return queryFactory.from(answer)
                 .join(answer.question, question)
                 .select(Projections.constructor(QuestionAndAnswerDto.class,
-                        question.description,
-                        answer.title
+                        question.title,
+                        answer.description
                 ))
                 .where(question.user.eq(user).and(question.type.eq(QuestionType.PIN)))
                 .fetch();

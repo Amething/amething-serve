@@ -30,7 +30,7 @@ public class AnswerServiceImpl implements AnswerService {
 
         Answer answer = Answer.builder()
                 .question(question)
-                .title(registrationAnswerDto.getTitle())
+                .description(registrationAnswerDto.getDescription())
                 .build();
 
         question.changeQuestionType(QuestionType.PIN);

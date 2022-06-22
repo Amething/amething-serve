@@ -29,7 +29,7 @@ public class QuestionServiceImpl implements QuestionService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 회원은 존재하지 않습니다."));
         Question question = Question.builder()
                 .user(user)
-                .description(questionDto.getDescription())
+                .title(questionDto.getTitle())
                 .type(QuestionType.UNREPLY)
                 .build();
         questionRepository.save(question);
