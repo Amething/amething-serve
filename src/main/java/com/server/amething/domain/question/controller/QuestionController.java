@@ -38,13 +38,11 @@ public class QuestionController {
     })
     @GetMapping("/user/me/questions")
     public SingleResult<List> findUnReplyQuestion(){
-        List<QuestionDto> questions = questionService.findUnReplyQuestion();
-        return responseService.getSingleResult(questions);
+        return responseService.getSingleResult(questionService.findUnReplyQuestion());
     }
 
     @GetMapping("/user/{oauthId}/pin")
     public SingleResult<List> findPinQuestion(@PathVariable Long oauthId){
-        List<QuestionAndAnswerDto> questions = questionService.findPinQuestion(oauthId);
-        return responseService.getSingleResult(questions);
+        return responseService.getSingleResult(questionService.findPinQuestion(oauthId));
     }
 }
