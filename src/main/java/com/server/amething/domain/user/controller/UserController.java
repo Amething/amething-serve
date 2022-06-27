@@ -1,5 +1,6 @@
 package com.server.amething.domain.user.controller;
 
+import com.server.amething.domain.user.dto.ChangeBioDto;
 import com.server.amething.domain.user.dto.ProfileDto;
 import com.server.amething.domain.user.service.UserService;
 import com.server.amething.global.response.ResponseService;
@@ -40,4 +41,15 @@ public class UserController {
         userService.logout();
         return responseService.getSuccessResult();
     }
+
+    @PutMapping("/user/bio")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
+    })
+    private CommonResult changeBio(@RequestBody ChangeBioDto changeBioDto) {
+        userService.changeBio(changeBioDto);
+        return responseService.getSuccessResult();
+    }
+
 }
