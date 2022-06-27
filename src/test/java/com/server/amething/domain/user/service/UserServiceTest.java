@@ -77,20 +77,13 @@ class UserServiceTest {
     @DisplayName("프로필 구현을 위한 정보를 가져오는 로직")
     void loadProfile() {
         //given
-        Long id = 1234567891L;
-        ProfileDto profileDto = new ProfileDto("user","img","안녕하세요 user입니다.");
-        userRepository.save(User.builder()
-                        .oauthId(id)
-                        .nickname(profileDto.getUserName())
-                        .profilePicture(profileDto.getProfilePicture())
-                        .bio(profileDto.getBio())
-                        .build());
+        User user = userUtil.getCurrentUser();
         //when
-        ProfileDto user = userService.loadProfile(id);
+        ProfileDto profile = userService.loadProfile(user.getOauthId());
 
         //then
-        assertThat(user.getUserName()).isEqualTo(profileDto.getUserName());
-        assertThat(user.getProfilePicture()).isEqualTo(profileDto.getProfilePicture());
+        assertThat(user.getNickname()).isEqualTo(profile.getUserName());
+        assertThat(user.getProfilePicture()).isEqualTo(profile.getProfilePicture());
     }
 
     @Test
