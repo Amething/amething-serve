@@ -43,7 +43,7 @@ class QuestionServiceTest {
         User user = User.builder()
                 .bio("")
                 .nickname("김태민")
-                .oauthId(2249049915L)
+                .oauthId(2249049917L)
                 .profilePicture("")
                 .roles(Collections.singletonList(Role.ROLE_MEMBER))
                 .refreshToken("Bearer refreshToken")
