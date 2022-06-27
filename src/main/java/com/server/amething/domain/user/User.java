@@ -99,4 +99,8 @@ public class User implements UserDetails {
     public void changeRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
+
+    public void changeBio(String bio) {
+        this.bio = bio;
+    }
 }
