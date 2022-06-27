@@ -2,6 +2,7 @@ package com.server.amething.domain.user.service;
 
 import com.server.amething.domain.auth.dto.UserProfileResponseDto;
 import com.server.amething.domain.user.User;
+import com.server.amething.domain.user.dto.ChangeBioDto;
 import com.server.amething.domain.user.enum_type.Role;
 import com.server.amething.domain.user.dto.ProfileDto;
 import com.server.amething.domain.user.repository.UserRepository;
@@ -50,6 +51,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public void logout() {
         userUtil.getCurrentUser().changeRefreshToken(null);
+    }
+
+    @Override
+    public void changeBio(ChangeBioDto changeBioDto) {
+        userUtil.getCurrentUser().changeBio(changeBioDto.getBio());
     }
 
     /**
