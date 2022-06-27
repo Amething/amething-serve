@@ -1,6 +1,7 @@
 package com.server.amething.domain.user.service;
 
 import com.server.amething.domain.user.User;
+import com.server.amething.domain.user.dto.ChangeBioDto;
 import com.server.amething.domain.user.dto.ProfileDto;
 import com.server.amething.domain.user.enum_type.Role;
 import com.server.amething.domain.user.repository.UserRepository;
@@ -23,7 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -90,5 +91,19 @@ class UserServiceTest {
         //then
         assertThat(user.getUserName()).isEqualTo(profileDto.getUserName());
         assertThat(user.getProfilePicture()).isEqualTo(profileDto.getProfilePicture());
+    }
+
+    @Test
+    @DisplayName("bio가 잘 바뀌나요?")
+    void changeBioTest() {
+        //given when
+        User currentUser = userUtil.getCurrentUser();
+        String beforeBio = currentUser.getBio();
+
+        userService.changeBio(new ChangeBioDto("나는야 김태민"));
+
+        //then
+        Assertions.assertThat("나는야 김태민").isEqualTo(currentUser.getBio());
+        assertNotEquals(currentUser.getBio(), beforeBio);
     }
 }
