@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.amething.domain.auth.config.OauthConfig;
 import com.server.amething.domain.auth.dto.TokenResponseDto;
 import com.server.amething.domain.auth.dto.UserProfileResponseDto;
+import com.server.amething.domain.auth.service.facade.OauthServiceFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,72 +22,26 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class OauthServiceImpl implements OauthService{
 
+    private final OauthServiceFacade oauthServiceFacade;
     private final OauthConfig oauthConfig;
     private final ObjectMapper objectMapper;
 
     @Override
-    public TokenResponseDto getAccessToken(String code) {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
-
-        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-        parameters.add("grant_type", "authorization_code");
-        parameters.add("client_id", oauthConfig.getClientId());
-        parameters.add("redirect_uri", oauthConfig.getRedirectUri());
-        parameters.add("code", code);
-        parameters.add("client_secret", oauthConfig.getClientSecret());
-
-        HttpEntity<MultiValueMap<String, String>> httpRequest = new HttpEntity<>(parameters, headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                "https://kauth.kakao.com/oauth/token",
-                HttpMethod.POST,
-                httpRequest,
-                String.class
-        );
-
-        TokenResponseDto oauthResponseDto = new TokenResponseDto();
-
-        try {
-            oauthResponseDto = objectMapper.readValue(response.getBody(), TokenResponseDto.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        return oauthResponseDto;
+    public TokenResponseDto getAccessToken(String code) throws JsonProcessingException {
+        RestTemplate restTemplate = oauthServiceFacade.createRestTemplate();
+        HttpHeaders headers = oauthServiceFacade.setHeader("application/x-www-form-urlencoded;charset=utf-8");
+        MultiValueMap<String, String> parameters = oauthServiceFacade.setParameter("authorization_code", oauthConfig, code);
+        HttpEntity<MultiValueMap<String, String>> httpRequest = oauthServiceFacade.createHttpRequest(headers, parameters);
+        ResponseEntity<String> responseEntity = oauthServiceFacade.callKakaoApi(restTemplate, "https://kauth.kakao.com/oauth/token", httpRequest, HttpMethod.POST);
+        return oauthServiceFacade.getResponse(objectMapper, responseEntity, TokenResponseDto.class);
     }
 
     @Override
-    public UserProfileResponseDto getUserProfile(String accessToken) {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
-        headers.add("Authorization", "Bearer " + accessToken);
-
-        HttpEntity<HttpHeaders> request = new HttpEntity<>(headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                "https://kapi.kakao.com/v2/user/me",
-                HttpMethod.POST,
-                request,
-                String.class
-        );
-
-        UserProfileResponseDto userProfileResponseDto = new UserProfileResponseDto();
-
-        try {
-            userProfileResponseDto = objectMapper.readValue(response.getBody(), UserProfileResponseDto.class);
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (JsonProcessingException exception) {
-            exception.printStackTrace();
-        }
-
-        return userProfileResponseDto;
+    public UserProfileResponseDto getUserProfile(String accessToken) throws JsonProcessingException {
+        RestTemplate restTemplate = oauthServiceFacade.createRestTemplate();
+        HttpHeaders headers = oauthServiceFacade.setHeader("application/x-www-form-urlencoded;charset=utf-8", accessToken);
+        HttpEntity<HttpHeaders> httpRequest = oauthServiceFacade.createHttpRequest(headers);
+        ResponseEntity<String> responseEntity = oauthServiceFacade.callKakaoApi(restTemplate, "https://kapi.kakao.com/v2/user/me", httpRequest, HttpMethod.POST);
+        return oauthServiceFacade.getResponse(objectMapper, responseEntity, UserProfileResponseDto.class);
     }
 }

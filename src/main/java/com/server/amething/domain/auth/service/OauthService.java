@@ -6,5 +6,5 @@ import com.server.amething.domain.auth.dto.UserProfileResponseDto;
 
 public interface OauthService {
     TokenResponseDto getAccessToken(String code) throws JsonProcessingException;
-    UserProfileResponseDto getUserProfile(String accessToken);
+    UserProfileResponseDto getUserProfile(String accessToken) throws JsonProcessingException;
 }
