@@ -26,22 +26,27 @@ public class OauthServiceImpl implements OauthService{
     private final OauthConfig oauthConfig;
     private final ObjectMapper objectMapper;
 
+    private final String CONTENT_TYPE = "application/x-www-form-urlencoded;charset=utf-8";
+    private final String GRANT_TYPE = "authorization_code";
+    private final String GET_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
+    private final String GET_PROFILE_URL = "https://kapi.kakao.com/v2/user/me";
+
     @Override
     public TokenResponseDto getAccessToken(String code) throws JsonProcessingException {
         RestTemplate restTemplate = oauthServiceFacade.createRestTemplate();
-        HttpHeaders headers = oauthServiceFacade.setHeader("application/x-www-form-urlencoded;charset=utf-8");
-        MultiValueMap<String, String> parameters = oauthServiceFacade.setParameter("authorization_code", oauthConfig, code);
+        HttpHeaders headers = oauthServiceFacade.setHeader(CONTENT_TYPE);
+        MultiValueMap<String, String> parameters = oauthServiceFacade.setParameter(GRANT_TYPE, oauthConfig, code);
         HttpEntity<MultiValueMap<String, String>> httpRequest = oauthServiceFacade.createHttpRequest(headers, parameters);
-        ResponseEntity<String> responseEntity = oauthServiceFacade.callKakaoApi(restTemplate, "https://kauth.kakao.com/oauth/token", httpRequest, HttpMethod.POST);
+        ResponseEntity<String> responseEntity = oauthServiceFacade.callKakaoApi(restTemplate, GET_TOKEN_URL, httpRequest, HttpMethod.POST);
         return oauthServiceFacade.getResponse(objectMapper, responseEntity, TokenResponseDto.class);
     }
 
     @Override
     public UserProfileResponseDto getUserProfile(String accessToken) throws JsonProcessingException {
         RestTemplate restTemplate = oauthServiceFacade.createRestTemplate();
-        HttpHeaders headers = oauthServiceFacade.setHeader("application/x-www-form-urlencoded;charset=utf-8", accessToken);
+        HttpHeaders headers = oauthServiceFacade.setHeader(CONTENT_TYPE, accessToken);
         HttpEntity<HttpHeaders> httpRequest = oauthServiceFacade.createHttpRequest(headers);
-        ResponseEntity<String> responseEntity = oauthServiceFacade.callKakaoApi(restTemplate, "https://kapi.kakao.com/v2/user/me", httpRequest, HttpMethod.POST);
+        ResponseEntity<String> responseEntity = oauthServiceFacade.callKakaoApi(restTemplate, GET_PROFILE_URL, httpRequest, HttpMethod.POST);
         return oauthServiceFacade.getResponse(objectMapper, responseEntity, UserProfileResponseDto.class);
     }
 }
