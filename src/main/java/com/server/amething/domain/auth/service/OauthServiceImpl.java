@@ -33,19 +33,29 @@ public class OauthServiceImpl implements OauthService{
 
     @Override
     public TokenResponseDto getAccessToken(String code) throws JsonProcessingException {
+        //Create RestTemplate
         RestTemplate restTemplate = oauthServiceFacade.createRestTemplate();
+
+        //Create HttpRequest
         HttpHeaders headers = oauthServiceFacade.setHeader(CONTENT_TYPE);
         MultiValueMap<String, String> parameters = oauthServiceFacade.setParameter(GRANT_TYPE, oauthConfig, code);
         HttpEntity<MultiValueMap<String, String>> httpRequest = oauthServiceFacade.createHttpRequest(headers, parameters);
+
+        //Get Response
         ResponseEntity<String> responseEntity = oauthServiceFacade.callKakaoApi(restTemplate, GET_TOKEN_URL, httpRequest, HttpMethod.POST);
         return oauthServiceFacade.getResponse(objectMapper, responseEntity, TokenResponseDto.class);
     }
 
     @Override
     public UserProfileResponseDto getUserProfile(String accessToken) throws JsonProcessingException {
+        //Create RestTemplate
         RestTemplate restTemplate = oauthServiceFacade.createRestTemplate();
+
+        //Create HttpRequest
         HttpHeaders headers = oauthServiceFacade.setHeader(CONTENT_TYPE, accessToken);
         HttpEntity<HttpHeaders> httpRequest = oauthServiceFacade.createHttpRequest(headers);
+
+        //Get Response
         ResponseEntity<String> responseEntity = oauthServiceFacade.callKakaoApi(restTemplate, GET_PROFILE_URL, httpRequest, HttpMethod.POST);
         return oauthServiceFacade.getResponse(objectMapper, responseEntity, UserProfileResponseDto.class);
     }
