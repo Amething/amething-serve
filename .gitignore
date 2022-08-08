@@ -38,3 +38,6 @@ out/
 
 ### Sensitive Information ###
 /src/main/resources/application.yml
+
+### Spring Rest Docs
+/src/main/resources/static/docs/*.html
